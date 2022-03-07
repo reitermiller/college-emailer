@@ -1,5 +1,7 @@
+from __future__ import division
 import csv
 import smtplib, ssl
+
 
 # open password file. no, its not encrypted.
 gmail_password = open("password.txt", "r").read()
@@ -21,8 +23,7 @@ with open('names.csv', newline='') as csvfile:
     names = list(csv.reader(csvfile))
 
 x = 0 #startine
-i = 499 #endline
-
+i = sum(1 for line in open('names.csv'))
 # mail funciton
 
 class Mail:
@@ -56,7 +57,8 @@ while ta_key == "true":
         mail.send(mails, subject, content)
         # advance "x" by one for line in csv to read.
         x = x + 1
-        print(x)
+        comp = ("%.0f%%" % (100 * x/i))
+        print("Sent email " , x , " of " , i , ". Completeion:" + comp)
         # while variable 'x' (line to read in csv) is below 'i' (maximum csv line), print current line and run function again. when x>=i, stop running.
         while x>=i:
             ta_key = false
